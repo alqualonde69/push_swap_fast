@@ -12,74 +12,39 @@
 
 #include "push_swap.h"
 
-//static int	p1(t_rl **rules, t_ps **a, t_ps **b, int **s)
-//{
-//	int		i;
-//	int 	j;
-//
-//	if (s[0][1] == 2)
-//	{
-//		add_t_rl(rules, "sa");
-//		return (1);
-//	}
-//	if (s[0][1] > 3)
-//	{
-//		i = 0;
-//		j = 0;
-//		while (i < s[0][1] - 3 && !(issort2(*a)))
-//		{
-//			if (j < s[0][0] && (*a)->n == s[1][j])
-//			{
-//				applyrule(a, b, "ra");
-//				add_t_rl(rules, "ra");
-//				++j;
-//			}
-//			else
-//			{
-//				applyrule(a, b, "pb");
-//				add_t_rl(rules, "pb");
-//				++i;
-//			}
-//		}
-//	}
-//	if (!(issort2(*a)))
-//	{
-//		applyrule(a, b, "sa");
-//		add_t_rl(rules, "sa");
-//	}
-//	return (0);
-//}
+static void	p4(t_rl **rules, t_ps **a, t_ps **b, int **s)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (i < s[1][0] - 3 && !(issort2(*a)))
+	{
+		if (j < s[1][1] && (*a)->n == s[0][j])
+		{
+			applyrule(a, b, "ra");
+			add_t_rl(rules, "ra");
+			++j;
+		}
+		else
+		{
+			applyrule(a, b, "pb");
+			add_t_rl(rules, "pb");
+			++i;
+		}
+	}
+}
 
 static int	p1(t_rl **rules, t_ps **a, t_ps **b, int **s)
 {
-	int		i;
-	int 	j;
-
 	if (s[1][0] == 2)
 	{
 		add_t_rl(rules, "sa");
 		return (1);
 	}
 	if (s[1][0] > 3)
-	{
-		i = 0;
-		j = 0;
-		while (i < s[1][0] - 3 && !(issort2(*a)))
-		{
-			if (j < s[1][1] && (*a)->n == s[0][j])
-			{
-				applyrule(a, b, "ra");
-				add_t_rl(rules, "ra");
-				++j;
-			}
-			else
-			{
-				applyrule(a, b, "pb");
-				add_t_rl(rules, "pb");
-				++i;
-			}
-		}
-	}
+		p4(rules, a, b, s);
 	if (!(issort2(*a)))
 	{
 		applyrule(a, b, "sa");
@@ -126,68 +91,19 @@ static void	p3(t_rl **rules, t_ps **a, t_ps **b)
 	}
 }
 
-//t_rl		*push_swap(t_ps *a, t_ps *b, int sz)
-//{
-//	t_rl	*rules;
-//	int		**t;
-//	int 	**s;
-//	int		i;
-//	int 	k;
-//
-//	k = 0;
-//	if (!(s = (int **)malloc(sizeof(int *) * 2)))
-//		return (NULL);
-//	if (!(s[0] = (int *)malloc(sizeof(int) * sz + 1)))
-//		return (NULL);
-//	if (!(s[1] = (int *)malloc(sizeof(int) * sz + 1)))
-//		return (NULL);
-//	if (!(t = (int **)malloc(sizeof(int *) * 4)))
-//		return (NULL);
-//	i = -1;
-//	while (++i < 4)
-//		if (!(t[i] = (int *)malloc(sizeof(int) * 3)))
-//			return (NULL);
-//	rules = NULL;
-//	sz > 3 ? sequence2(a, s, -1, &k) : 0;
-//	s[0][0] = k;
-//	s[0][1] = sz;
-//	if (issort(a) || sz == 1)
-//		return (NULL);
-//	if (p1(&rules, &a, &b, s))
-//		return (rules);
-//	while (b->c)
-//		p2(&a, &b, t, &rules);
-//	p3(&rules, &a, &b);
-//	i = -1;
-//	while (++i < 4)
-//		free(t[i]);
-//	free(t);
-//	return (rules);
-//}
-
 t_rl		*push_swap(t_ps *a, t_ps *b, int sz)
 {
 	t_rl	*rules;
 	int		**t;
-	int 	**s;
+	int		**s;
 	int		i;
 
-	if (!(t = (int **)malloc(sizeof(int *) * 4)))
-		return (NULL);
-	if (!(s = (int **)malloc(sizeof(int *) * 2)))
-		return (NULL);
-	if (!(s[1] = (int *)malloc(sizeof(int) * 2)))
+	i = -1;
+	rules = NULL;
+	if (pc1(&t, &s, i))
 		return (NULL);
 	s[1][0] = sz;
-	i = -1;
-	while (++i < 4)
-		if (!(t[i] = (int *)malloc(sizeof(int) * 3)))
-			return (NULL);
-	rules = NULL;
-	if (sz > 3)
-		if (sequence3(a, &s[0], &s[1][1]))
-			return (NULL);
-	if (issort(a) || sz == 1)
+	if (pc2(&t, &s, a, sz))
 		return (NULL);
 	if (p1(&rules, &a, &b, s))
 		return (rules);
@@ -198,5 +114,8 @@ t_rl		*push_swap(t_ps *a, t_ps *b, int sz)
 	while (++i < 4)
 		free(t[i]);
 	free(t);
+	free(s[0]);
+	free(s[1]);
+	free(s);
 	return (rules);
 }

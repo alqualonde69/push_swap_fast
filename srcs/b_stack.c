@@ -12,6 +12,19 @@
 
 #include "push_swap.h"
 
+static void *free_bs(t_ps **b)
+{
+	t_ps	*tmp;
+
+	while (*b)
+	{
+		tmp = *b;
+		*b = (*b)->prv;
+		free(tmp);
+	}
+	return (NULL);
+}
+
 t_ps	*b_stack(int i)
 {
 	int		j;
@@ -29,7 +42,7 @@ t_ps	*b_stack(int i)
 	while (++j < i - 1)
 	{
 		if (!(b->nxt = (t_ps *)malloc(sizeof(t_ps))))
-			return (NULL);
+			return (free_bs(&b));
 		b->nxt->prv = b;
 		b = b->nxt;
 		b->n = 0;

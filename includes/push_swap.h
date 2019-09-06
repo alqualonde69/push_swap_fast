@@ -106,15 +106,15 @@ void			opt1(t_ps *a, t_ps *b, int *t);
 void			opt2(t_ps *a, t_ps *b, int *t);
 void			opt3(t_ps *a, t_ps *b, int *t);
 void			opt4(t_ps *a, t_ps *b, int *t);
+int				pc1(int ***t, int ***s, int i);
+int				pc2(int ***t, int ***s, t_ps *a, int sz);
 void			print(t_ps *a, t_ps *b, int f);
 void			print_rules(char **rules, char *seq, int i);
 void			push(t_ps **dst, t_ps **src);
 t_rl			*push_swap(t_ps *a, t_ps *b, int sz);
 void			rotate(t_ps **stack);
 void			rrotate(t_ps **stack);
-void			sequence(t_ps *a, int *p);
-void			sequence2(t_ps *a, int **p, int j, int *k);
-int				sequence3(t_ps *a, int **s, int *k);
+int				sequence(t_ps *a, int **s, int *k);
 void			swap(t_ps **stack);
 void			val_rules(t_rl **r);
 

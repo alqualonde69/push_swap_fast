@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	print_list(t_rl *rs, int fd)
+void		print_list(t_rl *rs, int fd)
 {
 	t_rl	*tmp;
 
@@ -24,8 +24,7 @@ void	print_list(t_rl *rs, int fd)
 		fd != -1 ? write(fd, "\n", 1) : write(1, "\n", 1);
 		rs = rs->nxt;
 	}
-	rs = tmp->nxt;
-	free(tmp);
+	rs = tmp;
 	while (rs)
 	{
 		tmp = rs;
@@ -45,7 +44,7 @@ static int	help(char **av)
 	return (0);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	int		fd[2];
 	t_ps	*a;
@@ -67,8 +66,7 @@ int		main(int ac, char **av)
 		return (error());
 	if (!(b = b_stack(ac - 1)))
 		return (0);
-	if (!(rs = push_swap(a, b, ac - 1 - fd[1])))
-		return (0);
+	rs = push_swap(a, b, ac - 1 - fd[1]);
 	print_list(rs, fd[0]);
 	free_t_ps(&a, &b);
 	return (0);
