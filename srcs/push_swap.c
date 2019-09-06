@@ -114,7 +114,7 @@ t_rl		*push_swap(t_ps *a, t_ps *b, int sz)
 	while (++i < 4)
 		free(t[i]);
 	free(t);
-	free(s[0]);
+	sz > 3 ? free(s[0]) : 0;
 	free(s[1]);
 	free(s);
 	return (rules);

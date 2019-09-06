@@ -14,10 +14,13 @@
 
 int		freetps(t_ps *a)
 {
+	t_ps	*tmp;
+
 	while (a->nxt)
 	{
-		a->prv ? free(a->prv) : 0;
-		a = a->nxt;
+		tmp = a->nxt;
+		free(a);
+		a = tmp;
 	}
 	free(a);
 	return (1);

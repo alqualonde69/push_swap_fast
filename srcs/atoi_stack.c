@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void *free_as(t_ps **a)
+static void	*free_as(t_ps **a)
 {
 	t_ps	*tmp;
 
@@ -28,39 +28,30 @@ static void *free_as(t_ps **a)
 	return (NULL);
 }
 
-t_ps	*atoi_stack(char **av, unsigned short f)
+t_ps		*atoi_stack(char **av, int f)
 {
-	t_ps	*head;
+	t_ps	*h;
 	t_ps	*a;
 
 	if (is_nu(av, f))
 		return (NULL);
 	if (chckstack(av, f))
 		return (NULL);
-	if (!(a = ((t_ps *)malloc(sizeof(t_ps)))))
+	if (!(a = (t_ps *)malloc(sizeof(t_ps))))
 		return (NULL);
 	hd(&a, av, &f);
-	head = a;
+	h = a;
 	while (av[++f])
 	{
-		if (!(a->nxt = ((t_ps *)malloc(sizeof(t_ps)))))
-			return (free_as(&head));
+		if (!(a->nxt = (t_ps *)malloc(sizeof(t_ps))))
+			return (free_as(&h));
 		a->nxt->prv = a;
 		a = a->nxt;
 		a->n = ft_atoi(av[f]);
 		a->c = 1;
 		a->nxt = NULL;
 	}
-	if (isdup(head))
-	{
-		while (head)
-		{
-			a = head->nxt;
-			free(head);
-			head = a;
-		}
+	if (isdup(h))
 		return (NULL);
-//		return (free_as(&head));
-	}
-	return (head);
+	return (h);
 }

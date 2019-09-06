@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hd.c                                               :+:      :+:    :+:   */
+/*   print_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shunt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/26 19:55:09 by shunt             #+#    #+#             */
-/*   Updated: 2019/08/26 19:55:11 by shunt            ###   ########.fr       */
+/*   Created: 2019/09/06 22:44:30 by shunt             #+#    #+#             */
+/*   Updated: 2019/09/06 22:44:31 by shunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	hd(t_ps **head, char **av, int *f)
+void		print_list(t_rl *rs, int fd)
 {
-	(*head)->n = ft_atoi(av[++(*f)]);
-	(*head)->c = 1;
-	(*head)->prv = NULL;
-	(*head)->nxt = NULL;
+	t_rl	*tmp;
+
+	tmp = rs;
+	while (rs)
+	{
+		fd != -1 ? write(fd, rs->s, ft_strlen(rs->s)) :
+		write(1, rs->s, ft_strlen(rs->s));
+		fd != -1 ? write(fd, "\n", 1) : write(1, "\n", 1);
+		rs = rs->nxt;
+	}
+	rs = tmp;
+	while (rs)
+	{
+		tmp = rs;
+		rs = rs->nxt;
+		free(tmp);
+	}
 }

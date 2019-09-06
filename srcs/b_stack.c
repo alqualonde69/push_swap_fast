@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void *free_bs(t_ps **b)
+static void	*free_bs(t_ps **b)
 {
 	t_ps	*tmp;
 
@@ -25,7 +25,7 @@ static void *free_bs(t_ps **b)
 	return (NULL);
 }
 
-t_ps	*b_stack(int i)
+t_ps		*b_stack(int i)
 {
 	int		j;
 	t_ps	*head;

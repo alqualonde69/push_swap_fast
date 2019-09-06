@@ -12,25 +12,30 @@
 
 #include "push_swap.h"
 
-void		print_list(t_rl *rs, int fd)
+static void	frav(char **av)
 {
-	t_rl	*tmp;
+	int		i;
 
-	tmp = rs;
-	while (rs)
-	{
-		fd != -1 ? write(fd, rs->s, ft_strlen(rs->s)) :
-			write(1, rs->s, ft_strlen(rs->s));
-		fd != -1 ? write(fd, "\n", 1) : write(1, "\n", 1);
-		rs = rs->nxt;
-	}
-	rs = tmp;
-	while (rs)
-	{
-		tmp = rs;
-		rs = rs->nxt;
-		free(tmp);
-	}
+	i = -1;
+	while (av[++i])
+		free(av[i]);
+	free(av);
+}
+
+static int	isstr(char ***s, int *f, int *ac)
+{
+	int		n;
+
+	n = f[1];
+	f[1] = -1;
+	f[2] = 1;
+	if (!(*s = ft_strsplit((*s)[n + 1], ' ')))
+		return (1);
+	*ac = -1;
+	while ((*s)[++(*ac)])
+		;
+	++(*ac);
+	return (0);
 }
 
 static int	help(char **av)
@@ -44,30 +49,42 @@ static int	help(char **av)
 	return (0);
 }
 
+static int	m(int *fd, char **av)
+{
+	if (!(ft_strcmp(av[1], "-f")))
+	{
+		if (av[2])
+			if ((fd[0] = open(av[2], OPEN)) == -1)
+				return (1);
+		fd[1] = 2;
+	}
+	return (0);
+}
+
 int			main(int ac, char **av)
 {
-	int		fd[2];
+	int		fd[3];
 	t_ps	*a;
 	t_ps	*b;
 	t_rl	*rs;
 
 	fd[0] = -1;
 	fd[1] = 0;
+	fd[2] = 0;
 	if (ac < 2 || (ac > 1 && help(av)))
 		return (0);
-	if (!(ft_strcmp(av[1], "-f")))
-	{
-		if (av[2])
-			if ((fd[0] = open(av[2], OPEN)) == -1)
-				return (error());
-		fd[1] = 2;
-	}
+	if (m(fd, av))
+		return (error());
+	if (ac - 1 - fd[1] == 1 && isstr(&av, fd, &ac))
+		return (0);
 	if (!(a = atoi_stack(av, fd[1])))
 		return (error());
-	if (!(b = b_stack(ac - 1)))
+	fd[1] == -1 ? fd[1] = 0 : 0;
+	if (!(b = b_stack(ac - 1 - fd[1])))
 		return (0);
 	rs = push_swap(a, b, ac - 1 - fd[1]);
 	print_list(rs, fd[0]);
 	free_t_ps(&a, &b);
+	fd[2] ? frav(av) : 0;
 	return (0);
 }
