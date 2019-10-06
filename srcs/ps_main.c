@@ -6,30 +6,28 @@
 /*   By: shunt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/14 01:05:05 by shunt             #+#    #+#             */
-/*   Updated: 2019/09/09 19:29:47 by shunt            ###   ########.fr       */
+/*   Updated: 2019/08/26 21:49:11 by shunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	frav(char **av)
+static int	isstr(char ***s, int *f, int *ac)
 {
 	int		i;
 
 	i = -1;
-	while (av[++i])
-		free(av[i]);
-	free(av);
-}
-
-static int	isstr(char ***s, int *f, int *ac)
-{
-	int		n;
-
-	n = f[1];
-	f[1] = -1;
 	f[2] = 1;
-	if (!(*s = ft_strsplit((*s)[n + 1], ' ')))
+	while ((*s)[f[1] + 1][++i])
+		if ((*s)[f[1] + 1][i] != ' ')
+			break ;
+	if (!(*s)[f[1] + 1][i])
+		return (1);
+	i = f[1];
+	f[1] = -1;
+	if (!(ft_strlen((*s)[i + 1])))
+		return (2);
+	if (!(*s = ft_strsplit((*s)[i + 1], ' ')))
 		return (1);
 	*ac = -1;
 	while ((*s)[++(*ac)])
@@ -63,7 +61,7 @@ static int	m(int *fd, char **av)
 
 int			main(int ac, char **av)
 {
-	int		fd[3];
+	int		fd[4];
 	t_ps	*a;
 	t_ps	*b;
 	t_rl	*rs;
@@ -75,9 +73,9 @@ int			main(int ac, char **av)
 		return (0);
 	if (m(fd, av))
 		return (error());
-	if (ac - 1 - fd[1] == 1 && isstr(&av, fd, &ac))
-		return (0);
-	if (!(a = atoi_stack(av, fd[1])))
+	if (ac - 1 - fd[1] == 1 && (fd[3] = isstr(&av, fd, &ac)))
+		return (fd[3] == 2 ? error() : 0);
+	if (atst(&a, &av, fd))
 		return (error());
 	fd[1] == -1 ? fd[1] = 0 : 0;
 	if (!(b = b_stack(ac - 1 - fd[1])))

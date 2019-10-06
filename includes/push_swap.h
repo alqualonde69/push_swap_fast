@@ -6,7 +6,7 @@
 /*   By: shunt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/14 01:07:43 by shunt             #+#    #+#             */
-/*   Updated: 2019/09/09 19:27:02 by shunt            ###   ########.fr       */
+/*   Updated: 2019/08/26 15:25:19 by shunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void			app_opt4(t_ps **a, t_ps **b, t_rl **rules, int *n);
 void			applyrule(t_ps **a, t_ps **b, char *rule);
 void			applyrule2(t_ps **a, t_ps **b, char *rule);
 t_ps			*atoi_stack(char **av, int f);
+int				atst(t_ps **a, char ***av, int *fd);
 t_ps			*b_stack(int i);
 int				ch_fd(char **av, int ac, unsigned short *ff);
 int				ch_flags(char **av, int ac, unsigned short *f,
@@ -88,6 +89,7 @@ int				ch_flags(char **av, int ac, unsigned short *f,
 int				chckstack(char	**av, int i);
 int				cycle(int fd, unsigned short flag, t_ps **a, t_ps **b);
 int				error(void);
+void			frav(char **av);
 int				freetps(t_ps *a);
 void			free_t_ps(t_ps **a, t_ps **b);
 void			hd(t_ps **head, char **av, int *f);

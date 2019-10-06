@@ -46,16 +46,16 @@ SRC_PATH		=	srcs/
 INC_PATH		=	includes/
 
 C_SRC_NAME		=	applyrule.c atoi_stack.c b_stack.c c_main.c ch_fd.c\
-                    ch_flags.c chckstack.c cycle.c error.c freetps.c\
+                    ch_flags.c chckstack.c cycle.c error.c frav.c freetps.c\
                     free_t_ps.c hd.c isdup.c is_nu.c is_rule.c issort.c print.c\
                     push.c rotate.c swap.c
 
 P_SRC_NAME		=	add_t_rl.c app_opt1.c app_opt2.c app_opt3.c app_opt4.c\
-                    applyrule.c atoi_stack.c b_stack.c chckstack.c error.c\
-                    freetps.c free_t_ps.c hd.c isdup.c is_mn_ra.c is_nu.c\
-                    issort.c issort2.c last_a.c m_a.c opt1.c opt2.c opt3.c\
-                    opt4.c ps_main.c push.c push_swap.c print_list.c ps_cut.c\
-                    rotate.c sequence.c swap.c
+                    applyrule.c atoi_stack.c atst.c b_stack.c chckstack.c\
+                    error.c frav.c freetps.c free_t_ps.c hd.c isdup.c\
+                    is_mn_ra.c is_nu.c issort.c issort2.c last_a.c m_a.c opt1.c\
+                    opt2.c opt3.c opt4.c ps_main.c push.c push_swap.c\
+                    print_list.c ps_cut.c rotate.c sequence.c swap.c
 
 C_SRC			=	$(addprefix $(SRC_PATH), $(C_SRC_NAME))
 P_SRC			=	$(addprefix $(SRC_PATH), $(P_SRC_NAME))

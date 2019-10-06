@@ -6,25 +6,25 @@
 /*   By: shunt <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/10 13:26:51 by shunt             #+#    #+#             */
-/*   Updated: 2019/09/09 19:46:46 by shunt            ###   ########.fr       */
+/*   Updated: 2019/08/10 13:27:02 by shunt            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	frav(char **av)
+static int	isstr(char ***s, unsigned short *f, int *ac)
 {
 	int		i;
 
 	i = -1;
-	while (av[++i])
-		free(av[i]);
-	free(av);
-}
-
-static int	isstr(char ***s, unsigned short *f, int *ac)
-{
 	f[2] = 1;
+	while ((*s)[f[1] + 1][++i])
+		if ((*s)[f[1] + 1][i] != ' ')
+			break ;
+	if (!(*s)[f[1] + 1][i])
+		return (1);
+	if (!(ft_strlen((*s)[f[1] + 1])))
+		return (2);
 	if (!(*s = ft_strsplit((*s)[f[1] + 1], ' ')))
 		return (1);
 	*ac = -1;
@@ -50,8 +50,18 @@ static int	m(int *fd, unsigned short *flag, int *ac, char ***av)
 	}
 	if (ch_flags(*av, *ac, &flag[0], &flag[1]))
 		return (1);
-	if (*ac - 1 - flag[1] == 1 && isstr(av, flag, ac))
+	if (*ac - 1 - flag[1] == 1 && (flag[3] = isstr(av, flag, ac)))
+		return (flag[3] == 2 ? 2 : 1);
+	return (0);
+}
+
+static int	ats(t_ps **a, char ***av, unsigned short *flag)
+{
+	if (!(*a))
+	{
+		flag[2] ? frav(*av) : 0;
 		return (1);
+	}
 	return (0);
 }
 
@@ -60,16 +70,17 @@ int			main(int ac, char **av)
 	int				fd;
 	t_ps			*a;
 	t_ps			*b;
-	unsigned short	flag[3];
+	char			buf;
+	unsigned short	flag[4];
 
-	if (m(&fd, flag, &ac, &av))
-		return (0);
+	if ((flag[3] = m(&fd, flag, &ac, &av)))
+		return (flag[3] == 2 ? error() : 0);
 	a = flag[2] ? atoi_stack(av, -1) : atoi_stack(av, flag[1]);
-	if (!a)
+	if (ats(&a, &av, flag))
 		return (error());
 	if (!(b = b_stack(ac - 1 - flag[1])))
 		return (0);
-	if (cycle(fd, flag[0], &a, &b))
+	if (read(fd, &buf, 0) == -1 || cycle(fd, flag[0], &a, &b))
 	{
 		free_t_ps(&a, &b);
 		flag[2] ? frav(av) : 0;
